@@ -3,10 +3,12 @@
 import { useEffect, useState } from "react";
 import Card from "./components/Card.jsx";
 import Filters from "./components/Filters.jsx";
-
+import ReactPaginate from "react-paginate";
 export default function Home() {
     const [carData, setCarData] = useState([]);
-
+    const [pageNumber, setPageNumber] = useState(0);
+    const handlePageClick = (data) => setPageNumber(data.selected);
+    const pageCount = Math.ceil(carData.length / 10);
     const getData = async () => {
         try {
             fetch("https://67f52866913986b16fa37df7.mockapi.io/api/cars")
@@ -39,6 +41,20 @@ export default function Home() {
 
                     )}
 
+                </div>
+                <div>
+
+                    <ReactPaginate
+                        className="flex items-center justify-center gap-2  border-t border-gray-200 bg-white px-4 py-3 sm:px-6 text-black
+                        hover:curor-pointer text-sm font-medium"
+                        breakLabel="..."
+                        nextLabel="next >"
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={5}
+                        pageCount={pageCount}
+                        previousLabel="< previous"
+                        renderOnZeroPageCount={null}
+                    />
                 </div>
             </main>
         </div>
