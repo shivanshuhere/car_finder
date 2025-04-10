@@ -1,7 +1,7 @@
 
 export default function Filters() {
     return (
-        <div className="text-sm bg-slate-400 w-min h-full p-5 border-t-2 flex flex-col gap-6">
+        <div className="text-sm flex-wrap bg-slate-400 lg:w-min w-full h-full p-5 border-t-2 flex md:flex-col gap-6">
             <h1 className="text-xl font-semibold">Filters</h1>
             <div>
                 <label>Price range</label>

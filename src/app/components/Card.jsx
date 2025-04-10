@@ -1,9 +1,16 @@
 'use client'
-export default function Card({ img, name, price, id, brand, fuel }) {
-    const wishlist = [];
+export default function Card({ img, name, price, id, brand, fuel, cart = false }) {
+    img = "https://i.ytimg.com/vi/q5PPNZiu52w/hq720.jpg?sqp=-oaymwEXCK4FEIIDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLA8A99aXBdJwgmpbqwEk6Z-PaGH7A" //tmp img
     const handleAddToWishlist = () => {
-        wishlist.push(key);
-    }
+        const items = localStorage.getItem("mywishlist");
+        const wishlist = JSON.parse(items) || [];
+        if (wishlist.filter((item) => item.id === id).length > 0) alert("already added to wishlist");
+        else {
+            wishlist.push({ img, name, price, id, brand, fuel });
+            localStorage.setItem("mywishlist", JSON.stringify(wishlist));
+            alert(" added to wishlist");
+        }
+    };
     return (
 
         <>
@@ -20,11 +27,11 @@ export default function Card({ img, name, price, id, brand, fuel }) {
                             <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{fuel}</span>
                         </span>
                     </p>
-                    <button
+                    {cart && <button
                         onClick={handleAddToWishlist}
                         className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">
                         Add to wishlist
-                    </button>
+                    </button>}
                 </div>
             </div>
         </>

@@ -10,7 +10,7 @@ export default function Home() {
         try {
             fetch("https://67f52866913986b16fa37df7.mockapi.io/api/cars")
                 .then((res) => res.json())
-                .then((data) => setCarData(data));
+                .then((data) => { setCarData(data); localStorage.setItem("cars", JSON.stringify(data)) })
         } catch (error) {
             alert("failed to get data , api error!")
             console.log("api error :", error);
@@ -31,11 +31,11 @@ export default function Home() {
         getData();
     }, [])
     return (
-        <div className="flex w-full h-full">
-            <section className="h-screen text-black sticky top-0 left-0 sm:hidden md:block">
+        <div className="flex w-full h-full flex-col md:flex-row ">
+            <section className="w-full md:w-min text-black sticky md:h-screen top-0 ">
                 <Filters />
             </section>
-            <main className="p-10">
+            <main className="md:p-10">
                 <div className="flex flex-wrap  justify-evenly">
                     {currentItems.map((data) =>
                         <Card price={data.price}
@@ -43,8 +43,8 @@ export default function Home() {
                             fuel={data.fuel}
                             id={data.id}
                             key={data.id}
+                            cart={true}
                             name={data.name}
-                            img={"https://i.ytimg.com/vi/q5PPNZiu52w/hq720.jpg?sqp=-oaymwEXCK4FEIIDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLA8A99aXBdJwgmpbqwEk6Z-PaGH7A"}
                         />
                     )}
                 </div>
