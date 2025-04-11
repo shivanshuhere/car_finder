@@ -1,24 +1,74 @@
+// components/Filters.jsx
+export default function Filters({ filters, updateFilters }) {
+    const handlePriceChange = (event) => {
+        const { name, value } = event.target;
+        const newPrice = [...filters.price];
+        if (name === 'min') {
+            newPrice[0] = Number(value);
+        } else if (name === 'max') {
+            newPrice[1] = Number(value);
+        }
+        updateFilters({ price: newPrice });
+    };
 
-export default function Filters() {
+    const handleFuelChange = (event) => {
+        updateFilters({ fuel: event.target.value });
+    };
+
+    const handleSearchChange = (event) => {
+        updateFilters({ search: event.target.value });
+    };
+
     return (
-        <div className="text-sm flex-wrap bg-slate-400 lg:w-min w-full h-full p-5 border-t-2 flex md:flex-col gap-6">
-            <h1 className="text-xl font-semibold">Filters</h1>
-            <div>
-                <label>Price range</label>
-                <input type="range" min={0} />
-                <input type="range" max={100} />
+        <div className="text-white p-4 bg-slate-600 md:h-screen">
+            <div className="mb-4">
+                <label className="block mb-2">Search</label>
+                <input
+                    type="text"
+                    value={filters.search}
+                    onChange={handleSearchChange}
+                    placeholder="Search by name"
+                    className="w-full p-1 bg-slate-500"
+                />
+            </div>
+            <div className="mb-4">
+                <label className="block mb-2">Price Range</label>
+                <div className="flex items-center space-x-2">
+                    <input
+                        type="number"
+                        name="min"
+                        min="0"
+                        max="1000"
+                        value={filters.price[0]}
+                        onChange={handlePriceChange}
+                        className="w-20 p-1 bg-slate-500"
+                    />
+                    <span>-</span>
+                    <input
+                        type="number"
+                        name="max"
+                        min="0"
+                        max="1000"
+                        value={filters.price[1]}
+                        onChange={handlePriceChange}
+                        className="w-20 p-1 bg-slate-500"
+                    />
+                </div>
             </div>
             <div>
-                <label>Fuel Type</label>
-                <select>
-                    <option value={"gasoline"} defaultChecked>
-                        Gasoline
-                    </option>
-                    <option value={"diesel"}>Diesel</option>
-                    <option value={"hybrid"}>Hybrid</option>
-                    <option value={"electric"}>Electric</option>
+                <label className="block mb-2">Fuel Type</label>
+                <select
+                    value={filters.fuel}
+                    onChange={handleFuelChange}
+                    className="w-full p-1 bg-slate-500"
+                >
+                    <option value="">All</option>
+                    <option value="gasoline">Gasoline</option>
+                    <option value="diesel">Diesel</option>
+                    <option value="hybrid">Hybrid</option>
+                    <option value="electric">Electric</option>
                 </select>
             </div>
         </div>
-    )
+    );
 }
